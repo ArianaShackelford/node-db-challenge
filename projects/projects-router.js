@@ -84,7 +84,7 @@ router.get('/:id/resources', (req, res) => {
 // ************* TASKS *****************
 // add tasks to project
 
-router.post('/:id/task', (req, res) => {
+router.post('/:id/tasks', (req, res) => {
     const newTask = req.body;
     const {id} = req.params
   
@@ -101,5 +101,17 @@ router.post('/:id/task', (req, res) => {
 
 // get a list of tasks, include project name and description
 
+router.get('/:id/tasks', (req, res) => {
+    const {id} = req.params
+
+    Projects.listTasks(id)
+    .then(tasks => {
+      res.json(tasks);
+    })
+    .catch(err => {
+        console.log(err)
+      res.status(500).json({ message: 'Failed to get tasks' });
+    });
+  });
 
 module.exports = router;

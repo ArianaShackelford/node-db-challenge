@@ -7,17 +7,17 @@ exports.seed = function(knex) {
       return knex('tasks').insert([
         {
           project_id: 1,
-          description: 'Follow read me instructions and create a server and api',
+          task_description: 'Follow read me instructions and create a server and api',
           notes: 'Do the best you can',
         },
         {
           project_id:2,
-          description: 'Decide what you want to paint',
+          task_description: 'Decide what you want to paint',
           notes: 'look on pinterest for inspo',
         },
         {
           project_id:5,
-          description: 'Drive to library and browse',
+          task_description: 'Drive to library and browse',
         }
       ]);
     });

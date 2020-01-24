@@ -23,7 +23,7 @@ function listById(id){
 function listTasks(id){
     return db('tasks as t')
         .join('projects as p', 'p.id', 't.project_id')
-        .select('t.id', 't.description', 't.notes', 't.completed')
+        .select('p.project_name','p.description','t.id', 't.task_description', 't.notes', 't.completed')
         .where('p.id', id);
 };
 
