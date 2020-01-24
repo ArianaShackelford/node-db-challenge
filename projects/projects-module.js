@@ -29,17 +29,17 @@ function listTasks(id){
 
 function listProjectResources(id){
     return db('project_resources as pr')
-        .join('resources as r', 'r.id', 'pr.resources_id')
+        .join('resources as r', 'r.id', 'pr.resource_id')
         .join('projects as p', 'p.id', 'pr.project_id')
         .select('p.project_name', 'p.description', 'r.resource_name', 'r.description')
         .where('p.id', id);
 }
 
 function create(requestBody){
-    return db("project")
+    return db("projects")
         .insert(requestBody)
         .then(([id]) => {
-            return findById(id);
+            return listById(id);
         })
 };
 
