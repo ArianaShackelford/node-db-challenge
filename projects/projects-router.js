@@ -5,6 +5,7 @@ const Projects = require('./projects-module.js');
 const router = express.Router();
 
 // ************** PROJECTS ****************
+
 // create a new project
 
 router.post('/', (req, res) => {
@@ -51,9 +52,9 @@ router.get('/:id', (req, res) => {
   });
 
 // *************** RESOURCES **************
-// add resources to project
+// add resources 
 
-router.post('/:id/resources', (req, res) => {
+router.post('/resources', (req, res) => {
     const newResource = req.body;
   
     Projects.createResource(newResource)
@@ -66,7 +67,7 @@ router.post('/:id/resources', (req, res) => {
     });
   });
 
-//get a list of resources
+//get a list of resources for each project
 
 router.get('/:id/resources', (req, res) => {
     const {id} = req.params
@@ -81,14 +82,27 @@ router.get('/:id/resources', (req, res) => {
     });
   });
 
+  // get a list of all resources
+router.get('/resources', (req, res) => {
+    Projects.listResources()
+    .then(resources => {
+      res.status(200).json(resources);
+    })
+    .catch(err => {
+        console.log(err)
+      res.status(500).json({ message: 'Failed to get resources' });
+    });
+  });
+
+
 // ************* TASKS *****************
 // add tasks to project
 
 router.post('/:id/tasks', (req, res) => {
     const newTask = req.body;
-    const {id} = req.params
+    const {id} = req.params;
   
-    Projects.create(newTask, id)
+    Projects.createTask(newTask, id)
     .then(task => {
       res.status(201).json(task);
     })

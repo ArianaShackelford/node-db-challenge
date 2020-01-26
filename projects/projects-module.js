@@ -4,10 +4,11 @@ module.exports = {
     list, 
     listById, //takes id 
     listTasks, // takes in id
+    listResources,
     listProjectResources, //takes id
     create, //takes in param object === request.body
     createTask, //takes task object and project id
-    createResource, //takes resource object and project id
+    createResource, //takes resource object 
 }
 
 function list(){
@@ -35,6 +36,10 @@ function listProjectResources(id){
         .where('p.id', id);
 }
 
+function listResources(){
+    return db('resources');
+};
+
 function create(requestBody){
     return db("projects")
         .insert(requestBody)
@@ -46,7 +51,6 @@ function create(requestBody){
 function createTask(task, id){
     return db('tasks as t')
         .insert(task)
-        .where('t.project_id', id)
         .then(([id]) => {
             return listTasks(id);
         })
@@ -55,8 +59,7 @@ function createTask(task, id){
 function createResource(resource, id){
     return db('resources as r')
         .insert(resource)
-        .where('r.project_id', id)
-        .then(([id]) => {
-            return listProjectResources(id);
+        .then(() => {
+            return listResources();
         })
 };
